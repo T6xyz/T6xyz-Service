@@ -1,0 +1,46 @@
+# Java class files
+*.class
+
+# Logs
+*.log
+
+# Maven target directory
+/target/
+
+# Eclipse files
+*.classpath
+*.project
+*.settings/
+
+# IntelliJ files
+.idea/
+*.iml
+*.ipr
+
+# VS Code
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment & config files
+.env
+*.properties.local
+application-*.yml
+application-*.properties
+
+# Build artifacts
+*.jar
+*.war
+*.ear
+
+# Test reports
+/test-output/
+.surefire-*
+
+# Database files
+*.h2.db
+*.mv.db
+*.sqlite
+*.db

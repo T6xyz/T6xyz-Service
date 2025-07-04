@@ -1,0 +1,41 @@
+# Node modules
+node_modules/
+
+# Build output (default is dist/)
+dist/
+
+# Vite cache
+.vite/
+
+# Log files
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environment variables
+.env
+.env.*.local
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Editor directories and settings
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Testing coverage
+coverage/
+
+# Optional: Prettier / ESLint caches
+.prettiercache
+.eslintcache
