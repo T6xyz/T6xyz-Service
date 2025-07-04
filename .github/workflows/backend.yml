@@ -29,7 +29,7 @@ jobs:
         host: ${{ secrets.EC2_HOST }}
         username: ${{ secrets.EC2_USER }}
         key: ${{ secrets.EC2_KEY }}
-        source: target/*.jar
+        source: T6xyz-Service-Backend/target/*.jar
         target: ~/app.jar
 
     - name: Restart backend app on EC2
