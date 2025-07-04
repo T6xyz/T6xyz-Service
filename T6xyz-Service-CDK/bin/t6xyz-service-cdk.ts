@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import * as cdk from 'aws-cdk-lib';
-import { T6XyzServiceCdkStack } from '../lib/t6xyz-service-cdk-stack';
+import { T6XyzServiceCdkStack } from '../lib/app';
 
 const app = new cdk.App();
 new T6XyzServiceCdkStack(app, 'T6XyzServiceCdkStack', {
