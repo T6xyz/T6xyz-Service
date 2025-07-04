@@ -19,7 +19,9 @@ jobs:
           node-version: '22'
 
       - name: Install dependencies
+        working-directory: T6xyz-Service-Frontend
         run: npm ci
 
       - name: Build React app
+        working-directory: T6xyz-Service-Frontend
         run: npm run build
