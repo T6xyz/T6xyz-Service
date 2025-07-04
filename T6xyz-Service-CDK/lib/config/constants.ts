@@ -2,7 +2,7 @@ export const ACCOUNT_ID = "561440844371";
 
 export const REGION = "us-east-1"
 
-export const FRONTEND_SERVICE_NAME = "T6xyz-Frontend-Service";
+export const FRONTEND_SERVICE_NAME = "t6xyz-frontend-service";
 
 export const BACKEND_SERVICE_NAME = "T6xyz-Backend-Service";
 
