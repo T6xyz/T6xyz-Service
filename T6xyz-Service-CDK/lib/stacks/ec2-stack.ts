@@ -1,44 +1,88 @@
 import {
-    CfnOutput,
     Stack,
     StackProps,
 } from 'aws-cdk-lib';
+import { Certificate, CertificateValidation } from 'aws-cdk-lib/aws-certificatemanager';
 import { 
     Instance, 
     InstanceClass, 
     InstanceSize, 
     InstanceType, 
     KeyPair, 
-    KeyPairFormat, 
-    KeyPairType, 
     MachineImage, 
     Peer, 
     Port, 
     SecurityGroup, 
+    SubnetType, 
     UserData, Vpc } from 'aws-cdk-lib/aws-ec2';
+import { ApplicationLoadBalancer } from 'aws-cdk-lib/aws-elasticloadbalancingv2';
+import { InstanceTarget } from 'aws-cdk-lib/aws-elasticloadbalancingv2-targets';
+import { ARecord, HostedZone, RecordTarget } from 'aws-cdk-lib/aws-route53';
+import { LoadBalancerTarget } from 'aws-cdk-lib/aws-route53-targets';
 import { Construct } from 'constructs';
+import { BACKEND_SERVICE_NAME } from '../config/constants';
 
 export interface EC2StackProps extends StackProps {
+    /**
+     * @param
+     * 
+     * The domain name for the backend service
+     */
+    domainName: string,
 
+    /**
+     * @param
+     * 
+     * The subdomain for the backend service
+     */
+    subDomain: string
 }
 
 export class EC2Stack extends Stack {
-    constructor(scope: Construct, id: string, props?: EC2StackProps) {
+    constructor(scope: Construct, id: string, props: EC2StackProps) {
         super(scope, id, props)
 
         const vpc = new Vpc(this, 'T6xyz-Backend-Service-VPC', {
-            maxAzs: 2
+            maxAzs: 2,
+            subnetConfiguration: [
+                {
+                  cidrMask: 24,
+                  name: 'PublicSubnet',
+                  subnetType: SubnetType.PUBLIC,
+                },
+                {
+                  cidrMask: 24,
+                  name: 'PrivateSubnet',
+                  subnetType: SubnetType.PRIVATE_WITH_EGRESS,
+                }
+              ],
+        });
+
+        const hostedZone = HostedZone.fromLookup(this, `${BACKEND_SERVICE_NAME}-HostedZone`, {
+            domainName: props.domainName
+        });
+
+        const certificate = new Certificate(this, `${BACKEND_SERVICE_NAME}-Cert`, {
+            domainName: props.domainName,
+            subjectAlternativeNames: ['api.t6xyz.dev'],
+            validation: CertificateValidation.fromDns(hostedZone)
         })
 
-        const securityGroup = new SecurityGroup(this, 'T6xyz-Backend-Service-SecurityGroup', {
-            vpc,
+        const securityGroup = new SecurityGroup(this, `${BACKEND_SERVICE_NAME}-SecurityGroup`, {
+            vpc: vpc,
+            allowAllOutbound: true
+        })
+
+        const loadBalanacerSecurityGroup = new SecurityGroup(this, 'Load-Balancer-SecurityGroup', {
+            vpc: vpc,
             allowAllOutbound: true
         })
 
         securityGroup.addIngressRule(Peer.anyIpv4(), Port.tcp(22), 'Allow SSH');
         securityGroup.addIngressRule(Peer.anyIpv4(), Port.tcp(8080), 'Allow for HTTP requests from Spring service');
+        loadBalanacerSecurityGroup.addIngressRule(Peer.anyIpv4(), Port.tcp(433), 'Allows for HTTP access');
 
-        const userData = UserData.forLinux()
+        const userData = UserData.forLinux();
         userData.addCommands(
             'sudo yum update -y',
             'sudo yum install -y java-17-amazon-corretto',
@@ -46,21 +90,44 @@ export class EC2Stack extends Stack {
             'cd /app',
             '# JAR will be copied via GitHub Actions',
             'echo "Ready for deployment"'
-        )
+        );
 
-        const instance = new Instance(this, 'T6xyz-Backend-Service', {
+        const instance = new Instance(this, `${BACKEND_SERVICE_NAME}-Instance`, {
             vpc: vpc,
             instanceType: InstanceType.of(InstanceClass.T3, InstanceSize.MICRO),
             machineImage: MachineImage.latestAmazonLinux2023(),
             userData: userData,
-            keyPair: new KeyPair(this, 'T6xyz-Backend-Service-KeyPair', {
-                type: KeyPairType.RSA,
-                format: KeyPairFormat.PEM
-            })
-        })
+            vpcSubnets: { subnetType: SubnetType.PUBLIC },
+            keyPair: KeyPair.fromKeyPairName(this, `${BACKEND_SERVICE_NAME}-KeyPair`, "T6xyz-Backend-Service-KeyPair"),
+            securityGroup: securityGroup,
+            associatePublicIpAddress: true
+        });
 
-        new CfnOutput(this, 'PublicIP', {
-            value: instance.instancePublicIp
-        })
+        const loadBalancer = new ApplicationLoadBalancer(this, `${BACKEND_SERVICE_NAME}-LoadBalancer`, {
+            vpc: vpc,
+            internetFacing: true,
+            securityGroup: loadBalanacerSecurityGroup
+        });
+
+        const listener = loadBalancer.addListener('HTTP-Listener', {
+            port: 443,
+            certificates: [certificate],
+            open: true
+        });
+
+        listener.addTargets('Backend-Fleet', {
+            port: 8080,
+            targets: [new InstanceTarget(instance)],
+            healthCheck: {
+                path: '/',
+                port: '8080',
+            },
+        });
+
+        new ARecord(this, 'Backend-Record', {
+            zone: hostedZone,
+            recordName: props.subDomain,
+            target: RecordTarget.fromAlias(new LoadBalancerTarget(loadBalancer))
+        });
     }
 }

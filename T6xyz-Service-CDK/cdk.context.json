@@ -1,0 +1,14 @@
+{
+  "availability-zones:account=561440844371:region=us-east-1": [
+    "us-east-1a",
+    "us-east-1b",
+    "us-east-1c",
+    "us-east-1d",
+    "us-east-1e",
+    "us-east-1f"
+  ],
+  "hosted-zone:account=561440844371:domainName=t6xyz.dev:region=us-east-1": {
+    "Id": "/hostedzone/Z0033914376PK495T8F4T",
+    "Name": "t6xyz.dev."
+  }
+}

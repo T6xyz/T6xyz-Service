@@ -1,9 +1,13 @@
 export const ACCOUNT_ID = "561440844371";
 
+export const REGION = "us-east-1"
+
 export const FRONTEND_SERVICE_NAME = "T6xyz-Frontend-Service";
 
 export const BACKEND_SERVICE_NAME = "T6xyz-Backend-Service";
 
-export const FRONTEND_DOMAIN = "https://t6xyz.io";
+export const BACKEND_SUBDOMAIN = "api";
 
-export const BACKEND_DOMAIN = "https://t6xyz.dev";
+export const FRONTEND_DOMAIN = "t6xyz.io";
+
+export const BACKEND_DOMAIN = "t6xyz.dev";

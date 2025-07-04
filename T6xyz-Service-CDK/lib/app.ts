@@ -1,16 +1,16 @@
 import * as cdk from 'aws-cdk-lib';
-import { Construct } from 'constructs';
-// import * as sqs from 'aws-cdk-lib/aws-sqs';
+import { EC2Stack } from './stacks/ec2-stack';
+import { ACCOUNT_ID, BACKEND_DOMAIN, BACKEND_SERVICE_NAME, BACKEND_SUBDOMAIN, REGION } from './config/constants';
 
-export class T6XyzServiceCdkStack extends cdk.Stack {
-  constructor(scope: Construct, id: string, props?: cdk.StackProps) {
-    super(scope, id, props);
+const app = new cdk.App();
 
-    // The code that defines your stack goes here
-
-    // example resource
-    // const queue = new sqs.Queue(this, 'T6XyzServiceCdkQueue', {
-    //   visibilityTimeout: cdk.Duration.seconds(300)
-    // });
-  }
+const env = {
+  account: ACCOUNT_ID,
+  region: REGION
 }
+
+const ec2Stack = new EC2Stack(app, `${BACKEND_SERVICE_NAME}-EC2-Stack`, {
+  domainName: BACKEND_DOMAIN,
+  subDomain: BACKEND_SUBDOMAIN,
+  env: env,
+});
