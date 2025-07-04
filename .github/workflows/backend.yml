@@ -40,4 +40,5 @@ jobs:
         key: ${{ secrets.EC2_KEY }}
         script: |
           pkill -f 'java' || true
-          nohup java -jar ~/app.jar > springboot.log 2>&1 &
+          nohup java -jar ~/app.jar > springboot.log 2>&1 < /dev/null &
+          disown
