@@ -1,9 +1,9 @@
-import * as cdk from 'aws-cdk-lib';
+import { App } from 'aws-cdk-lib';
 import { EC2Stack } from './stacks/ec2-stack';
 import { ACCOUNT_ID, BACKEND_DOMAIN, BACKEND_SERVICE_NAME, BACKEND_SUBDOMAIN, FRONTEND_DOMAIN, FRONTEND_SERVICE_NAME, REGION } from './config/constants';
 import { FrontendStack } from './stacks/frontend-stack';
 
-const app = new cdk.App();
+const app = new App();
 
 const env = {
   account: ACCOUNT_ID,

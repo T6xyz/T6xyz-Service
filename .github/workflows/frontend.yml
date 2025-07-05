@@ -6,22 +6,44 @@ on:
       - main
 
 jobs:
-  build:
+  deploy:
+    name: Build & Deploy
     runs-on: ubuntu-latest
+
+    env:
+      AWS_REGION: us-east-1 
+      REACT_DIR: ./T6xyz-Service-Frontend
+      CDK_DIR: ./T6xyz-Service-CDK
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: 22
 
-      - name: Install dependencies
-        working-directory: T6xyz-Service-Frontend
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: 🧱 Install CDK dependencies
+        working-directory: ${{ env.CDK_DIR }}
         run: npm ci
 
-      - name: Build React app
-        working-directory: T6xyz-Service-Frontend
+      - name: 📦 Install React dependencies
+        working-directory: ${{ env.REACT_DIR }}
+        run: npm ci
+
+      - name: ⚒️ Build React App
+        working-directory: ${{ env.REACT_DIR }}
         run: npm run build
+
+      - name: 🚀 Deploy CDK
+        working-directory: ${{ env.CDK_DIR }}
+        run: npx cdk deploy --require-approval never
+

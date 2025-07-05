@@ -1,11 +1,13 @@
-import { RemovalPolicy, Stack, StackProps } from "aws-cdk-lib";
+import { Duration, RemovalPolicy, Stack, StackProps } from "aws-cdk-lib";
 import { ARecord, HostedZone, RecordTarget } from "aws-cdk-lib/aws-route53";
 import { Construct } from "constructs";
 import { Certificate, CertificateValidation } from "aws-cdk-lib/aws-certificatemanager";
 import { BlockPublicAccess, Bucket } from "aws-cdk-lib/aws-s3";
-import { Distribution, ViewerProtocolPolicy } from "aws-cdk-lib/aws-cloudfront";
-import { S3StaticWebsiteOrigin } from 'aws-cdk-lib/aws-cloudfront-origins';
+import { AllowedMethods, Distribution, SecurityPolicyProtocol, ViewerProtocolPolicy } from "aws-cdk-lib/aws-cloudfront";
+import { S3BucketOrigin } from 'aws-cdk-lib/aws-cloudfront-origins';
 import { CloudFrontTarget } from "aws-cdk-lib/aws-route53-targets";
+import { BucketDeployment, Source } from "aws-cdk-lib/aws-s3-deployment";
+import path from "path";
 
 export interface FrontendStackProps extends StackProps {
     /**
@@ -35,26 +37,45 @@ export class FrontendStack extends Stack {
             validation: CertificateValidation.fromDns(hostedZone)
         })
 
-        const bucket = new Bucket(this, `${props.serviceName}-Bucket`, {
-            bucketName: `${props.serviceName}-bucket`,
+        const siteBucket = new Bucket(this, 'SiteBucket', {
+            bucketName: props.domainName,
+            publicReadAccess: false,
             blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
-            removalPolicy: RemovalPolicy.DESTROY,
-            autoDeleteObjects: true
-        })
-
-        const distribution = new Distribution(this, `${props.serviceName}-SiteDistribution`, {
-            defaultRootObject: 'index.html',
-            domainNames: [props.domainName],
-            certificate,
-            defaultBehavior: {
-              origin: new S3StaticWebsiteOrigin(bucket),
-              viewerProtocolPolicy: ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
-            },
+            removalPolicy: RemovalPolicy.DESTROY, // Modify in prod
+            autoDeleteObjects: true, // Modify in prod
           });
 
-          new ARecord(this, 'Frontend-Record', {
+        const distribution = new Distribution(this, 'SiteDistribution', {
+            certificate: certificate,
+            defaultRootObject: "index.html",
+            domainNames: [props.domainName],
+            minimumProtocolVersion: SecurityPolicyProtocol.TLS_V1_2_2021,
+            errorResponses:[
+                {
+                httpStatus: 403,
+                responseHttpStatus: 403,
+                responsePagePath: '/error.html',
+                ttl: Duration.minutes(30),
+                }
+            ],
+            defaultBehavior: {
+                origin: S3BucketOrigin.withOriginAccessControl(siteBucket),
+                compress: true,
+                allowedMethods: AllowedMethods.ALLOW_GET_HEAD_OPTIONS,
+                viewerProtocolPolicy: ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+            }
+        })
+
+        new ARecord(this, 'Frontend-Record', {
             zone: hostedZone,
             target: RecordTarget.fromAlias(new CloudFrontTarget(distribution)),
         });
+
+        new BucketDeployment(this, 'DeployWithInvalidation', {
+            sources: [Source.asset(path.join(__dirname, '../../../T6xyz-Service-Frontend/dist'))],
+            destinationBucket: siteBucket,
+            distribution,
+            distributionPaths: ['/*'],
+          });
     }
 }
