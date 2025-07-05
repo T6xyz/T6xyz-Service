@@ -1,7 +1,7 @@
 import './index.css';
 import './App.css'
 import { ShikiHighlighter } from 'react-shiki'
-import { Heading, Highlight, Spinner, Stack, Text } from "@chakra-ui/react"
+import { Spinner} from "@chakra-ui/react"
 import { useEffect, useState } from 'react';
 
 function App() {
