@@ -3,7 +3,7 @@ name: Deploy T6xyz Backend Service to EC2 Instance
 on:
   push:
     branches:
-      - main  # or your deployment branch
+      - main
 
 jobs:
   build-and-deploy:
