@@ -31,17 +31,21 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
 
-      - name: 🧱 Install CDK dependencies
+      - name: Install CDK dependencies
         working-directory: ${{ env.CDK_DIR }}
         run: npm ci
 
-      - name: 📦 Install React dependencies
+      - name: Install React dependencies
         working-directory: ${{ env.REACT_DIR }}
         run: npm ci
 
-      - name: ⚒️ Build React App
+      - name: Build React App
         working-directory: ${{ env.REACT_DIR }}
         run: npm run build
+
+      - name: Synth CDK
+        working-directory: ${{ env.CDK_DIR }}
+        run: npx cdk synth 
 
       - name: 🚀 Deploy CDK
         working-directory: ${{ env.CDK_DIR }}
