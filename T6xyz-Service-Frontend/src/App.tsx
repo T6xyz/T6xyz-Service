@@ -41,6 +41,7 @@ function App() {
         addDefaultStyles={true}
         showLineNumbers={true}
         startingLineNumber={1}
+        delay={150}
         as="div"
         style={{
           textAlign: "left",
