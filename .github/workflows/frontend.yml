@@ -45,5 +45,5 @@ jobs:
 
       - name: 🚀 Deploy CDK
         working-directory: ${{ env.CDK_DIR }}
-        run: npx cdk deploy --require-approval never
+        run: npx cdk deploy --all --require-approval never 
 
