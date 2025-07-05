@@ -10,5 +10,12 @@
   "hosted-zone:account=561440844371:domainName=t6xyz.dev:region=us-east-1": {
     "Id": "/hostedzone/Z0033914376PK495T8F4T",
     "Name": "t6xyz.dev."
-  }
+  },
+  "hosted-zone:account=561440844371:domainName=t6xyz.io:region=us-east-1": {
+    "Id": "/hostedzone/Z10292931ALBQD11WP331",
+    "Name": "t6xyz.io."
+  },
+  "acknowledged-issue-numbers": [
+    34892
+  ]
 }

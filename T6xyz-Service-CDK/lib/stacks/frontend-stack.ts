@@ -28,8 +28,8 @@ export class FrontendStack extends Stack {
     constructor(scope: Construct, id: string, props: FrontendStackProps) {
         super(scope, id, props)
 
-        const hostedZone = new HostedZone(this, `${props.serviceName}-HostedZone`, {
-            zoneName: props.domainName
+        const hostedZone = HostedZone.fromLookup(this, `${props.serviceName}-HostedZone`, {
+            domainName: props.domainName
         })
 
         const certificate = new Certificate(this, `${props.serviceName}-Cert`, {
