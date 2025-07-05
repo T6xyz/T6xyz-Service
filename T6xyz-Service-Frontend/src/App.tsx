@@ -1,3 +1,4 @@
+import './index.css';
 import './App.css'
 import { ShikiHighlighter } from 'react-shiki'
 import { Heading, Highlight, Spinner, Stack, Text } from "@chakra-ui/react"
@@ -20,6 +21,12 @@ function App() {
     return () => window.removeEventListener('load', handleLoad);
   }, []);
 
+  if (!isPageLoaded) {
+    return (
+      <Spinner size="lg" />
+    )
+  }
+
 
 
   const code = `
@@ -41,40 +48,34 @@ function App() {
 
   return (
     <div>
-        {isPageLoaded ? (
-          <div style={{marginBottom: "100px"}}>
-            <Stack>
-              <Heading size="3xl" letterSpacing="tight">
-                <Highlight query="with speed" styles={{ color: "teal.600" }}>
-                  T6xyz.IO
-                </Highlight>
-              </Heading>
-              <Text fontSize="md" color="fg.muted">
-                This is sample code below for Spring Application
-              </Text>
-            </Stack>
-            <br></br>
-            <ShikiHighlighter
-              language="java"
-              className="code-block"
-              theme="github-dark-default"
-              showLanguage={true}
-              addDefaultStyles={true}
-              showLineNumbers={true}
-              startingLineNumber={1}
-              delay={150}
-              as="div"
-              style={{
-                textAlign: "left",
-                fontSize: "16px"
-              }}
-            >
-              {code}
-            </ShikiHighlighter>
-          </div>
-        ) : (
-          <Spinner size="lg" />
-        )}
+      <Stack>
+        <Heading size="3xl" letterSpacing="tight">
+          <Highlight query="with speed" styles={{ color: "teal.600" }}>
+            T6xyz.IO
+          </Highlight>
+        </Heading>
+        <Text fontSize="md" color="fg.muted">
+          This is sample code below for Spring Application
+        </Text>
+      </Stack>
+      <br></br>
+      <ShikiHighlighter
+        language="java"
+        className="code-block"
+        theme="github-dark-default"
+        showLanguage={true}
+        addDefaultStyles={true}
+        showLineNumbers={true}
+        startingLineNumber={1}
+        delay={150}
+        as="div"
+        style={{
+          textAlign: "left",
+          fontSize: "16px"
+        }}
+      >
+        {code}
+      </ShikiHighlighter>
     </div>
   )
 }
