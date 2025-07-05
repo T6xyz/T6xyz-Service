@@ -48,17 +48,6 @@ function App() {
 
   return (
     <div>
-      <Stack>
-        <Heading size="3xl" letterSpacing="tight">
-          <Highlight query="with speed" styles={{ color: "teal.600" }}>
-            T6xyz.IO
-          </Highlight>
-        </Heading>
-        <Text fontSize="md" color="fg.muted">
-          This is sample code below for Spring Application
-        </Text>
-      </Stack>
-      <br></br>
       <ShikiHighlighter
         language="java"
         className="code-block"
