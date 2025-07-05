@@ -1,34 +1,55 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import { ShikiHighlighter } from 'react-shiki'
+import { Heading, Highlight, Stack, Text } from "@chakra-ui/react"
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  const code = `
+  package com.service.backend;
+
+  import org.springframework.boot.SpringApplication;
+  import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+  @SpringBootApplication
+  public class BackendApplication {
+
+    public static void main(String[] args) {
+      SpringApplication.run(BackendApplication.class, args);
+    }
+  }
+  `; // input code
+  
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div style={{marginBottom: "100px"}}>
+        <Stack>
+          <Heading size="3xl" letterSpacing="tight">
+            <Highlight query="with speed" styles={{ color: "teal.600" }}>
+              T6xyz.IO
+            </Highlight>
+          </Heading>
+          <Text fontSize="md" color="fg.muted">
+            This is sample code below for Spring Application
+          </Text>
+        </Stack>
+        <br></br>
+        <ShikiHighlighter
+        language="java"
+        className="code-block"
+        theme="github-dark-default"
+        showLanguage={true}
+        addDefaultStyles={true}
+        showLineNumbers={true}
+        startingLineNumber={1}
+        as="div"
+        style={{
+          textAlign: "left",
+          fontSize: "16px"
+        }}
+      >
+        {code}
+      </ShikiHighlighter>
+    </div>
   )
 }
 
