@@ -1,70 +1,37 @@
 import './index.css';
 import './App.css'
-import { ShikiHighlighter } from 'react-shiki'
 import { Spinner} from "@chakra-ui/react"
-import { useEffect, useState } from 'react';
+import { useShikiHighlighter } from 'react-shiki';
 
 function App() {
-  const [isPageLoaded, setIsPageLoaded] = useState(false);
-
-  useEffect(() => {
-    const handleLoad = () => {
-      setIsPageLoaded(true);
-    };
-
-    if (document.readyState === 'complete') {
-      setIsPageLoaded(true);
-    } else {
-      window.addEventListener('load', handleLoad);
-    }
-
-    return () => window.removeEventListener('load', handleLoad);
-  }, []);
-
-  if (!isPageLoaded) {
-    return (
-      <Spinner size="lg" />
-    )
-  }
-
-
-
   const code = `
-  package com.service.backend;
-
-  import org.springframework.boot.SpringApplication;
-  import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-  @SpringBootApplication
-  public class BackendApplication {
-
-    public static void main(String[] args) {
-      SpringApplication.run(BackendApplication.class, args);
-    }
-  }
-  `;
-
+    package com.service.backend;
   
+    import org.springframework.boot.SpringApplication;
+    import org.springframework.boot.autoconfigure.SpringBootApplication;
+  
+    @SpringBootApplication
+    public class BackendApplication {
+  
+      public static void main(String[] args) {
+        SpringApplication.run(BackendApplication.class, args);
+      }
+    }
+    `;
+
+  const highlightedCode = useShikiHighlighter(code, 'java', 'github-dark-default', {
+    showLineNumbers: true,
+  });
 
   return (
     <div>
-      <ShikiHighlighter
-        language="java"
-        className="code-block"
-        theme="github-dark-default"
-        showLanguage={true}
-        addDefaultStyles={true}
-        showLineNumbers={true}
-        startingLineNumber={1}
-        delay={150}
-        as="div"
-        style={{
-          textAlign: "left",
-          fontSize: "16px"
-        }}
-      >
-        {code}
-      </ShikiHighlighter>
+      {!highlightedCode? (
+        <Spinner size = "lg"></Spinner>
+      ) : (
+        <div style={{textAlign: "left", width: "900px"}}>
+          {highlightedCode}
+        </div>
+      )}
     </div>
   )
 }
