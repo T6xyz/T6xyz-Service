@@ -5,7 +5,6 @@ import org.bson.codecs.pojo.ClassModel;
 import org.bson.codecs.pojo.PojoCodecProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
 import com.T6xyz_Service.backend.model.Premium;
 import com.T6xyz_Service.backend.model.User;
 import com.mongodb.ConnectionString;
@@ -57,9 +56,7 @@ public class MongoModule {
         CodecRegistry codecRegistry = buildCodeRegistry(User.class);
 
         MongoCollection<Premium> premiumCollection = database.getCollection("premiums", Premium.class)
-        .withCodecRegistry(codecRegistry);
-
-        createIndex(premiumCollection, "username", true);        
+        .withCodecRegistry(codecRegistry);       
 
         return premiumCollection;
     }
