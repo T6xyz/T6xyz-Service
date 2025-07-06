@@ -26,7 +26,7 @@ public class MongoModule {
 
     @Bean
     public MongoClient getMongoClient() {
-        String uri = String.format("mongodb+srv://%s:$s@%s.1hy8n.mongodb.net/?retryWrites=true&w=majority&appName=T6xyzCluster",
+        String uri = String.format("mongodb+srv://%s:%s@%s.1hy8n.mongodb.net/?retryWrites=true&w=majority&appName=T6xyzCluster",
         System.getenv("DB_USER"), System.getenv("DB_PASS"), System.getenv("DB_CLUSTER"));
 
         return MongoClients.create(
