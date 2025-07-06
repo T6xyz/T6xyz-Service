@@ -56,8 +56,12 @@ public interface Repository<T> {
         getMongoCollection().findOneAndUpdate(getFilterByProperty(ID_FIELD, id), Updates.set(property, value));
     }
 
-    default List<T> findByProperty(String name, Object value) {
-        return getMongoCollection().find(getFilterByProperty(name, value)).into(new ArrayList<>());
+    default Optional<List<T>> findByPropertyAll(String name, Object value) {
+        return Optional.ofNullable(getMongoCollection().find(getFilterByProperty(name, value)).into(new ArrayList<>()));
+    }
+    
+    default Optional<T> findByProperty(String name, Object value) {
+        return Optional.ofNullable(getMongoCollection().find(getFilterByProperty(name, value)).first());
     }
 
     private Document getFilterByProperty(String property, Object value) {
