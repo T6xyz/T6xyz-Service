@@ -19,6 +19,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String createUser(User userInput) {
+        if (userInput == null || userInput.getUsername() == null 
+        || userInput.getPassword() == null || userInput.getEmail() == null) {
+            throw new RuntimeException("Input is invalid");
+        }
+
         Optional<User> userEntity = userRepo.findByProperty("username", userInput.getUsername());
 
         if (userEntity.isEmpty()) {
@@ -36,6 +41,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String findUser(Credentials credentialsInput) {
+        if (credentialsInput.getUsername() == null || credentialsInput.getPassword() == null) {
+            throw new RuntimeException("Input is invalid");
+        }
+        
         Optional<User> userEntity = userRepo.findByProperty("username", credentialsInput.getUsername());
 
         if (!userEntity.isEmpty()) {

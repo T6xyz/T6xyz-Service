@@ -16,13 +16,13 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @Service
 @RestController
-@RequestMapping("/com/T6xyz-Backend-Service")
+@RequestMapping("/com/T6xyz-Backend-Service/users")
 public class UserActivity {
     private final UserServiceImpl userService;
 
     private final AuthProvider authProvider;
 
-    @GetMapping("/echo")
+    @GetMapping("/Echo")
     @PreAuthorize("hasAuthority('USER')")
     public String echo() {
         return "Echoed String!";

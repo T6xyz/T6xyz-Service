@@ -21,7 +21,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
             .addFilterBefore(new TokenFilter(authProvider), BasicAuthenticationFilter.class)
-            .authorizeHttpRequests((requests) -> requests.requestMatchers(HttpMethod.POST, "/com/T6xyz-Backend-Service/LoginUser", "/com/T6xyz-Backend-Service/RegisterUser").permitAll().anyRequest().authenticated());
+            .authorizeHttpRequests((requests) -> requests.requestMatchers(HttpMethod.POST, "/com/T6xyz-Backend-Service/users/LoginUser", "/com/T6xyz-Backend-Service/users/RegisterUser").permitAll().anyRequest().authenticated());
         
         return http.build();
     }
