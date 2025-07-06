@@ -11,6 +11,7 @@ import lombok.Setter;
 @Setter
 public class Premium {
     String id;
+    String userId;
     String type;
     Long startDate;
     Long endState;
