@@ -1,0 +1,11 @@
+.hiddenHome {
+    opacity: 0;
+    transition: all 1.5s;
+    filter: blur(2px);
+    transform: translateX(-10%);
+  }
+  .showHome {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateX(0);
+  }
