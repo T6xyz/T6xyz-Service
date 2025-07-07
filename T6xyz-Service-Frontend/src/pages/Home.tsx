@@ -40,7 +40,7 @@ export function Home() {
                                 Learn About Fundamental Data Structures and Algorithms
                                 </Highlight>
                             </Heading>
-                            <Text fontSize="xl" color="#e8e8e8" width="1150px" lineHeight={1.6} fontFamily="font-family: Arial, Helvetica, sans-serif">
+                            <Text fontSize="xl" color="#e8e8e8" width="70%" lineHeight={1.6} fontFamily="font-family: Arial, Helvetica, sans-serif">
                                 Gain insight on how to ace technical interviews at some of the tech industry's most competitive companies.
                                 Topics include introductory concepts like Arrays, Binary Search, and Trees all the way to more complex topics like
                                 Bitmask Dynamic Programming, Graph Theory, and AVLs.
@@ -59,7 +59,7 @@ export function Home() {
                                 Learn How to Develop Backend Services using Springboot
                                 </Highlight>
                             </Heading>
-                            <Text fontSize="xl" color="#e8e8e8" width="1150px" lineHeight={1.6} fontFamily="font-family: Arial, Helvetica, sans-serif" textShadow="3px 2px 5px black">
+                            <Text fontSize="xl" color="#e8e8e8" width="70%"  lineHeight={1.6} fontFamily="font-family: Arial, Helvetica, sans-serif" textShadow="3px 2px 5px black">
                                 Learn and gain knowledge on how to develop backend services using Springboot. You will learn the fundamentals 
                                 including the Spring Container and Dependency Injections all the way to more advanced topics such as JWT Token Authorization and
                                 Spring Security. If your goals are to build a SaaS (Software as a Service) application or a AaaS (AI as a service) application, T6xyz.io is the 
@@ -73,7 +73,7 @@ export function Home() {
                                 <Highlight query={["Learn", "Software Engineering"]} styles={{ color: "teal.600"}}>
                                 Ready to Learn and Bring Your Software Engineering Skillset to the Next Level?
                                 </Highlight>
-                                <Text fontSize="2xl" color="#e8e8e8" width="1150px" lineHeight={1.6} fontFamily="font-family: Arial, Helvetica, sans-serif" textShadow="3px 2px 5px black" textAlign={"center"} paddingTop={1}>
+                                <Text fontSize="2xl" color="#e8e8e8" lineHeight={1.6} fontFamily="font-family: Arial, Helvetica, sans-serif" textShadow="3px 2px 5px black" textAlign={"center"} paddingTop={3}>
                                     Join the T6xyz premium community and begin learning! 
                                 </Text>
                             </Heading>
