@@ -34,7 +34,7 @@ export function Home() {
                                 <source src={homeVideo1} type="video/mp4" />
                             </video>
                         </Box>
-                        <VStack position="absolute" zIndex={2} width="100%" height="100vh" justify="center" className="hiddenHome" overflow={"scroll"}>
+                        <VStack position="absolute" zIndex={2} width="100%" height="100vh" justify="center" className="hiddenHome" overflow={"hidden"}>
                             <Heading size="5xl" letterSpacing="tight" textShadow="3px 2px 5px black" paddingBottom={1}>
                                 <Highlight query={queries} styles={{ color: "teal.600" }}>
                                 Learn About Fundamental Data Structures and Algorithms
@@ -53,7 +53,7 @@ export function Home() {
                                 <source src={homeVideo2} type="video/mp4" />
                             </video>
                         </Box>
-                        <VStack position="absolute" zIndex={2} width="100%" height="100vh" justify="center" className="hiddenHome" overflow={"scroll"}>
+                        <VStack position="absolute" zIndex={2} width="100%" height="100vh" justify="center" className="hiddenHome" overflow={"hidden"}>
                             <Heading size="5xl" letterSpacing="tight" textShadow="3px 2px 5px black" paddingBottom={1}>
                                 <Highlight query="Springboot" styles={{ color: "teal.600" }}>
                                 Learn How to Develop Backend Services using Springboot
@@ -68,7 +68,7 @@ export function Home() {
                         </VStack>
                     </Box>
                     <Box width="100%" height="100vh" zIndex={2}>
-                        <VStack position="absolute" zIndex={2} width="100%" height="100vh" justify="center" className="hiddenHome" overflow={"scroll"}>
+                        <VStack position="absolute" zIndex={2} width="100%" height="100vh" justify="center" className="hiddenHome" overflow={"hidden"}>
                             <Heading size="4xl" letterSpacing="tight" paddingBottom={1}>
                                 <Highlight query={["Learn", "Software Engineering"]} styles={{ color: "teal.600"}}>
                                 Ready to Learn and Bring Your Software Engineering Skillset to the Next Level?
