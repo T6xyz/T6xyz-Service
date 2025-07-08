@@ -34,7 +34,7 @@ export function Home() {
                                 <source src={homeVideo1} type="video/mp4" />
                             </video>
                         </Box>
-                        <VStack position="absolute" zIndex={2} width="100%" height="100vh" justify="center" className="hiddenHome">
+                        <VStack position="absolute" zIndex={2} width="100%" height="100vh" justify="center" className="hiddenHome" overflow={"scroll"}>
                             <Heading size="5xl" letterSpacing="tight" textShadow="3px 2px 5px black" paddingBottom={1}>
                                 <Highlight query={queries} styles={{ color: "teal.600" }}>
                                 Learn About Fundamental Data Structures and Algorithms
@@ -48,18 +48,18 @@ export function Home() {
                         </VStack>
                     </Box>
                     <Box width="100%" height="100vh">
-                        <Box position="absolute" zIndex={1}>
+                        <Box position="absolute" zIndex={2}>
                             <video autoPlay muted loop playsInline disablePictureInPicture style={{width: "100%", height: "100vh", objectFit: "cover", filter: "blur(4.5px)"}}>
                                 <source src={homeVideo2} type="video/mp4" />
                             </video>
                         </Box>
-                        <VStack position="absolute" zIndex={2} width="100%" height="100vh" justify="center" className="hiddenHome">
+                        <VStack position="absolute" zIndex={2} width="100%" height="100vh" justify="center" className="hiddenHome" overflow={"scroll"}>
                             <Heading size="5xl" letterSpacing="tight" textShadow="3px 2px 5px black" paddingBottom={1}>
                                 <Highlight query="Springboot" styles={{ color: "teal.600" }}>
                                 Learn How to Develop Backend Services using Springboot
                                 </Highlight>
                             </Heading>
-                            <Text fontSize="xl" color="#e8e8e8" width="70%"  lineHeight={1.6} fontFamily="font-family: Arial, Helvetica, sans-serif" textShadow="3px 2px 5px black">
+                            <Text fontSize="xl" color="#e8e8e8" width="70%" lineHeight={1.6} fontFamily="font-family: Arial, Helvetica, sans-serif" textShadow="3px 2px 5px black">
                                 Learn and gain knowledge on how to develop backend services using Springboot. You will learn the fundamentals 
                                 including the Spring Container and Dependency Injections all the way to more advanced topics such as JWT Token Authorization and
                                 Spring Security. If your goals are to build a SaaS (Software as a Service) application or a AaaS (AI as a service) application, T6xyz.io is the 
@@ -67,8 +67,8 @@ export function Home() {
                             </Text>
                         </VStack>
                     </Box>
-                    <Box width="100%" height="100vh">
-                        <VStack position="absolute" zIndex={2} width="100%" height="100vh" justify="center" className="hiddenHome">
+                    <Box width="100%" height="100vh" zIndex={2}>
+                        <VStack position="absolute" zIndex={2} width="100%" height="100vh" justify="center" className="hiddenHome" overflow={"scroll"}>
                             <Heading size="4xl" letterSpacing="tight" paddingBottom={1}>
                                 <Highlight query={["Learn", "Software Engineering"]} styles={{ color: "teal.600"}}>
                                 Ready to Learn and Bring Your Software Engineering Skillset to the Next Level?
@@ -107,7 +107,7 @@ export function Home() {
                                 </List.Item>
                             </List.Root>
                             <Box paddingTop={8}>
-                                <Flex>
+                                <Flex flexWrap="column">
                                     <Button colorPalette="teal" variant="outline" size="2xl">
                                         Buy Premium
                                         <Stat.Root paddingLeft={18}>
