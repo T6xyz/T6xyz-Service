@@ -1,0 +1,5 @@
+.blur-background {
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px); /* for Safari */
+    background-color: rgba(0, 0, 0, 0.2); /* optional: adds translucent tint */
+  }

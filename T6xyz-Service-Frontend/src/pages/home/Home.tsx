@@ -107,7 +107,7 @@ export function Home() {
                                 </List.Item>
                             </List.Root>
                             <Box paddingTop={8}>
-                                <Flex flexWrap="column">
+                                <Flex>
                                     <Button colorPalette="teal" variant="outline" size="2xl">
                                         Buy Premium
                                         <Stat.Root paddingLeft={18}>
@@ -121,7 +121,7 @@ export function Home() {
                                     <Button colorPalette="teal" variant="outline" size="2xl">
                                         Try T6xyz For Free
                                         <Stat.Root paddingLeft={18}>
-                                            <Stat.HelpText>Linked list lectures only</Stat.HelpText>
+                                            <Stat.HelpText>Free Data Structures Lecture</Stat.HelpText>
                                         </Stat.Root>
                                     </Button>                              
                                 </Flex>

@@ -1,5 +1,6 @@
-import { Box, Button, Flex, Image, Link, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Image, Text } from "@chakra-ui/react";
 import logo from '/src/assets/T6xyzLogo.png';
+import { Link } from "react-router-dom";
 
   export default function NavBar() {
     
@@ -11,15 +12,17 @@ import logo from '/src/assets/T6xyzLogo.png';
                 </Box>
 
                 <Flex gap={4} px={10}>
-                    <Link href="#" fontSize="18px" variant="plain">
-                        About T6xyz
+                    {/* <ChakaraLink fontSize="18px" variant="plain" className="link-class">
+                        <Link to="/about">About T6xyz</Link>
+                    </ChakaraLink>
+                    <ChakaraLink href="/premium" px={12} fontSize="18px" variant="plain" className="link-class">
+                        <Link to="/premium">Premium</Link>
+                    </ChakaraLink> */}
+                    <Link to="/login">
+                        <Button colorPalette="teal" variant="outline" size="lg">
+                            Login
+                        </Button>
                     </Link>
-                    <Link href="#" px={12} fontSize="18px" variant="plain">
-                        Premium
-                    </Link>
-                    <Button colorPalette="teal" variant="outline" size="lg">
-                        Login
-                    </Button>
                     <Text style={{alignContent: "center"}} color="light-grey" fontSize="19px" px={2}>or</Text>
                     <Button colorPalette="teal" variant="outline" size="lg">
                         Sign Up
